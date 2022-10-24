@@ -1,0 +1,118 @@
+<div *ngIf="loading">
+  <app-spinner></app-spinner>
+</div>
+<div class="container"  *ngIf="!loading">
+
+  <div class="col2">
+    <div class="container">
+      <div class="abs-center">
+        <div class="row">
+          <div class="col-sm-5 col-md-8" *ngFor="let foto of fotos">
+            <a class="thumbnail">
+              <img
+                class="miniatura img-thumbnail rounded float-start"
+                src="{{ foto }}"
+              />
+            </a>
+          </div>
+        </div>
+        <div class="col2">
+          <form [formGroup]="pagoForm" (ngSubmit)="confirmarPago()">
+            <label>Total a pagar <strong>{{precio}}$</strong></label>
+            <br>
+            <label>Card Number</label>
+            <input
+              formControlName="cardNumber"
+              class="number"
+              type="text"
+              ng-model="ncard"
+              maxlength="19"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                pagoForm.get('cardNumber')?.hasError('required') &&
+                pagoForm.get('cardNumber')?.touched
+              "
+              >El numero <strong>es Requerido</strong></span
+            >
+            <label>Cardholder name</label>
+            <input
+              formControlName="cardHolderName"
+              class="inputname"
+              type="text"
+              placeholder=""
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                pagoForm.get('cardHolderName')?.hasError('required') &&
+                pagoForm.get('cardHolderName')?.touched
+              "
+              >El Card Holder <strong>es Requerido</strong></span
+            >
+            <label>Expiry date</label>
+            <input
+              formControlName="cardExpireDate"
+              class="expire"
+              type="text"
+              placeholder="MM / YYYY"
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                pagoForm.get('cardExpireDate')?.hasError('required') &&
+                pagoForm.get('cardExpireDate')?.touched
+              "
+              >La fecha de expiracion <strong>es Requerido</strong></span
+            >
+            <label>Security Number</label>
+            <input
+              formControlName="cardSecurityNumbre"
+              class="ccv"
+              type="text"
+              placeholder="CVC"
+              maxlength="3"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                pagoForm.get('cardSecurityNumbre')?.hasError('required') &&
+                pagoForm.get('cardSecurityNumbre')?.touched
+              "
+              >El CVC <strong>es Requerido</strong></span
+            >
+            <label class="checkContainer">-----Envio
+              <input type="checkbox" (change)="onCheckboxChange($event)" >
+              <span class="checkmark"></span>
+            </label>
+            <div class="form-control" *ngIf="envio">
+              <label>Direccion</label>
+              <input
+                formControlName="direccion"
+                class="inputname"
+                type="text"
+                placeholder=""
+              />
+              
+              <label>Telefono</label>
+              <input
+                formControlName="telefono"
+                class="inputname"
+                type="text"
+                placeholder=""
+              />
+            </div>
+           
+            <button type="submit" class="buy">
+              <i class="fa-solid fa-money-check-dollar"></i> Comprar
+            </button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
